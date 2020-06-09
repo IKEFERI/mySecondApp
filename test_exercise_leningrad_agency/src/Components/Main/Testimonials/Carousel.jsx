@@ -1,6 +1,6 @@
 import style from "./Carousel.module.sass"
-import leftImg from "../assets/img/left.jpg";
-import rightImg from "../assets/img/right.jpg";
+import leftImg from "../../../assets/img/left.jpg";
+import rightImg from "../../../assets/img/right.jpg";
 import React from "react";
 import Carousel from "react-slick";
 import "slick-carousel/slick/slick.css";
