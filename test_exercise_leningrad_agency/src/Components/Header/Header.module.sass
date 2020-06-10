@@ -1,0 +1,103 @@
+@import 'src/App.module'
+@import "src/assets/Sass/burger"
+.header
+  width: 100%
+
+.logo__wrapper_pc
+  margin: 20px 0
+  +media-breakpoint-down(sm)
+    display: none
+
+.logo
+  display: block
+  width: auto
+  height: 100%
+
+.logo__wrapper
+  height: 100px
+
+.nav
+  box-sizing: border-box
+  position: relative
+  display: block
+  background-color: $base_color
+  width: 100vw
+  margin-left: calc((100vw - 100%) / -2)
+  z-index: 99999
+  +media-breakpoint-down(sm)
+    background: none
+    position: fixed
+    top: 0
+    left: 0
+
+.nav__list
+  display: flex
+  flex-flow: row wrap
+  justify-content: space-between
+  list-style-type: none
+  max-width: 1200px
+  padding: 0
+  margin: auto
+  +mt(0.25s)
+  &.active
+    +media-breakpoint-down(sm)
+      background-color: $base_color
+      opacity: 1
+      visibility: visible
+      user-select: initial
+
+  +media-breakpoint-down(sm)
+    background-color: transparent
+    user-select: none
+    opacity: 0
+    visibility: hidden
+
+
+.nav__item
+  display: inline-block
+  flex: 1 1 10%
+  +media-breakpoint-down(sm)
+    flex-basis: 100%
+
+.nav__link
+  display: block
+  padding: 20px
+  font-weight: 600
+  text-decoration: none
+  text-transform: uppercase
+  white-space: nowrap
+  text-align: center
+  color: $text_color
+  +mt(0.25s)
+
+  &:hover, &_active
+    background-color: $accent_color
+    color: #fff
+
+.nav__mobile
+  display: flex
+  flex-flow: row nowrap
+  justify-content: space-between
+  align-items: center
+  background-color: $base_color
+  +media-breakpoint-up(md)
+    display: none
+
+.logo__wrapper_mobile
+  height: 60px
+  margin: 5px
+
+
+.menuButton
+  display: inline-block
+  padding: 7px
+  margin-right: 15px
+  border: 1px solid lighten($text_color, 40%)
+
+.burgerIcon
+  @include burger(30px, 4px, 5px, $text_color)
+
+.menuButton
+  &.isActive
+    .burgerIcon
+      @include burger-to-cross

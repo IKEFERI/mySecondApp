@@ -6,7 +6,7 @@ import {
     nameInputTextAC,
     openClosePopupAC,
     phoneInputTextAC, sendFailedAC,
-    sendFormAC, startSendingFormAC, sendSuccessAC, clearStateAC, focusPhoneAC, focusNameAC, focusMailAC
+    sendFormAC, startSendingFormAC, sendSuccessAC, clearStateAC, focusPhoneAC, focusNameAC, focusMailAC, noticeHideAC
 } from "../../redux/popupFormReducer";
 
 
@@ -24,9 +24,11 @@ let mapStateToProps = (state) => {
         popupIsOpen: popupState.popupIsOpen,
         formData: popupState.formData,
         startSendingForm: popupState.formSending,
-        nameFocus: popupState.nameFocus,
-        mailFocus: popupState.mailFocus,
-        phoneFocus: popupState.phoneFocus
+        nameFocus: popupState.nameFocused,
+        mailFocus: popupState.mailFocused,
+        phoneFocus: popupState.phoneFocused,
+        sendSuccess: popupState.sendSuccess,
+        sendFailed: popupState.sendFailed,
     }
 
 
@@ -39,12 +41,13 @@ let mapDispatchToProps = (dispatch) => {
         onNameInputText: (text) => {dispatch(nameInputTextAC(text))},
         onSendForm: () => {dispatch(sendFormAC())},
         afterSendForm: () => {dispatch(clearStateAC())},
-        sendSuccess: () => {dispatch(sendSuccessAC())},
-        sendFailed: () => {dispatch(sendFailedAC())},
+        onSendSuccess: () => {dispatch(sendSuccessAC())},
+        onSendFailed: () => {dispatch(sendFailedAC())},
         startSendingForm: () => {dispatch(startSendingFormAC())},
         onFocusPhone: () => {dispatch(focusPhoneAC())},
         onFocusName: () => {dispatch(focusNameAC())},
-        onFocusMail: () => {dispatch(focusMailAC())}
+        onFocusMail: () => {dispatch(focusMailAC())},
+        noticeHide: () => {dispatch(noticeHideAC())}
     }
 }
 

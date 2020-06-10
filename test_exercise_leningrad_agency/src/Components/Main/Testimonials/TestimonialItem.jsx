@@ -1,7 +1,5 @@
-import style from "./Carousel.module.sass";
+import style from "./TestimonialItem.module.sass";
 import React from "react";
-
-
 
 
 let TestimonialItem = (props) => {

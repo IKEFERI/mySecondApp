@@ -1,0 +1,76 @@
+@import "src/App.module"
+
+.carousel__item
+  display: flex
+  flex-flow: row nowrap
+  position: relative
+  padding: 40px
+  margin: 0 10px
+  max-width: 500px
+  text-decoration: none
+  border: 3px solid $base_color
+  color: $text_color
+  background-color: #fff
+  +mt(0.25s)
+  +media-breakpoint-down(md)
+    flex-flow: row wrap
+    justify-items: center
+    justify-content: center
+    margin: auto
+
+  &:hover
+    border: 3px solid $accent_color
+    color: $accent_color
+
+    .round
+      box-shadow: 0 0 0 3px $accent_color
+
+    .testimonials__name
+      &:after
+        width: 70px
+
+.round
+  display: block
+  width: 80px
+  height: 80px
+  border-radius: 100%
+  overflow: hidden
+  +mt(0.25s)
+
+.round__img
+    width: 100%
+    object-fit: cover
+    object-position: center
+
+.testimonials__item_col_right
+  margin-left: 40px
+  +media-breakpoint-down(md)
+    margin-left: 0
+    margin-top: 20px
+    text-align: center
+
+.testimonials__name
+  font-weight: 600
+  font-size: 18px
+  padding-bottom: 10px
+  position: relative
+  margin-bottom: 26px
+
+  &:after
+    content: ''
+    position: absolute
+    bottom: 0
+    left: 0
+    width: 36px
+    height: 3px
+    background-color: $accent_color
+    +mt(0.25s)
+    +media-breakpoint-down(md)
+      left: 50%
+      transform: translateX(-50%)
+
+.blockquote
+  margin: 0
+  padding: 0
+  font: 16px/1.6 'Open Sans', sans-serif
+  font-style: italic

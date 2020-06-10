@@ -1,8 +1,8 @@
-import style from "../../../App.module.sass";
-import TCarousel from "./Carousel";
+import style from "Testimonials.module.sass";
 import React from "react";
 import leftImg from "../../../assets/img/left.jpg";
 import rightImg from "../../../assets/img/right.jpg";
+import TestimonialsCarousel from "./TestimonialsCarousel";
 
 let Testimonials = () => {
 
@@ -25,7 +25,7 @@ let Testimonials = () => {
         <section className={style.testimonials}>
             <h2 className={style.h2}>Отзывы наших покупателей</h2>
             <div className={style.carousel + " " + style.testimonials__carousel}>
-                <TCarousel items={items}/>
+                <TestimonialsCarousel items={items}/>
             </div>
         </section>
     )

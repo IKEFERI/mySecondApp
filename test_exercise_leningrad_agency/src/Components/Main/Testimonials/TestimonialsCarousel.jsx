@@ -1,5 +1,3 @@
-import leftImg from "../../../assets/img/left.jpg";
-import rightImg from "../../../assets/img/right.jpg";
 import React from "react";
 import Carousel from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -7,7 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import TestimonialItem from "./TestimonialItem";
 
 
-function TCarousel(props) {
+function TestimonialsCarousel(props) {
     let settings = {
         infinite: true,
         speed: 500,
@@ -35,4 +33,4 @@ function TCarousel(props) {
 
 }
 
-export default TCarousel;
+export default TestimonialsCarousel;

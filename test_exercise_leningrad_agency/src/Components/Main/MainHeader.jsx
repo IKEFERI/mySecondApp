@@ -1,4 +1,4 @@
-import style from "../../App.module.sass";
+import style from "./MainHeader.module.sass";
 import React from "react";
 import PopupOpenButtonContainer from "../Popup/PopupOpenButtonContainer";
 
@@ -20,8 +20,8 @@ let MainHeader = () => {
             <p className={style.p}><strong className={style.strong}>Lorem ipsum dolor sit amet, consectetur
                 adipisicing elit! </strong></p>
 
-
             <PopupOpenButtonContainer/>
+
         </header>
     )
 }

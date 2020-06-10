@@ -1,0 +1,37 @@
+@import "src/App.module"
+
+
+.footer__link
+  display: block
+  padding: 20px
+  font-weight: 600
+  text-decoration: none
+  text-transform: uppercase
+  white-space: nowrap
+  text-align: center
+  color: $text_color
+  +mt(0.25s)
+  &:hover, &_active
+    color: #fff
+
+
+.footer__nav
+  box-sizing: border-box
+  position: relative
+  display: block
+  background-color: $base_color
+  width: 100vw
+  margin-left: calc((100vw - 100%) / -2)
+  padding: 20px
+  text-align: center
+  +media-breakpoint-down(sm)
+    background-color: $base_color
+.footer__nav__link
+  padding: 0
+  display: inline-block
+  position: relative
+  border-bottom: 1px solid $text_color
+  &:hover
+    background-color: initial
+    color: lighten($text_color,15%)
+    border-bottom: 1px solid lighten($text_color,15%)

@@ -1,20 +1,22 @@
 import style from "./Popup.module.sass";
 import React from "react";
 import * as axios from "axios";
+import PopupFormNotice from "./PopupFormNotice";
 
-
+// huh how do you like this. Elon Musk?
 class Popup extends React.Component {
 
-    constructor(props) {
-        super(props)
-    }
-
     componentDidMount = () => {
-        console.log("component did mount, form reset, and ready to use... in my dreams");
+        console.log("component did mounted, form reset, and ready to use. And its all correctly... in my dreams");
     }
 
-    componentDidUpdate = () => {  // huh how do you this Elon Musk?
+    onUserSendForm = () => {
+        this.props.startSendingForm();
+        this.props.onSendForm();
+    }
 
+    onSubmitForm = (e) => {
+        e.preventDefault();
         if (this.props.startSendingForm) {
             if (this.props.formSended) {
                 alert("Вы уже отправили заявку, спасибо!")
@@ -27,31 +29,29 @@ class Popup extends React.Component {
 
                         console.log("Request has been sended and response success received from server");
 
-                        this.props.afterSendForm();
-                        this.props.sendSuccess();
-                        alert("Спасибо! Наш менеджер, скоро вам перезвонит. " + response);
 
+                        this.props.onSendSuccess();
+                        this.props.afterSendForm();
+
+                        // alert("Спасибо! Наш менеджер, скоро вам перезвонит. " + response);
+                        setTimeout(this.noticeHide, 3000);
                     })
                         .catch(error => {
 
                             console.log("Request has been sended, but response failed");
 
+
+                            this.props.onSendFailed();
                             this.props.afterSendForm();
-                            this.props.sendFailed();
-                            alert("Извините! Наш менеджер, вам не перезвонит. Попробуйте отправить еще раз! " + error);
+                            // alert("Извините! Наш менеджер, вам не перезвонит. Попробуйте отправить еще раз! " + error);
+                            setTimeout(this.noticeHide, 3000);
                         });
                 }
             }
         }
     }
 
-    onSendForm = (e) => {
-        e.preventDefault();
-        this.props.onSendForm();
-    }
-    startSendingForm = () => {
-        this.props.startSendingForm();
-    }
+
     onMailInputText = (e) => {
         let text = e.target.value;
         this.props.onMailInputText(text);
@@ -66,31 +66,38 @@ class Popup extends React.Component {
     }
     onOpenClosePopup = (e) => {
         e.preventDefault();
-        console.log(this.props.popupIsOpen)
-        this.props.onOpenClosePopup()
+        this.props.onOpenClosePopup();
     }
     onFocusPhone = () => {
-        this.props.onFocusPhone()
+        this.props.onFocusPhone();
     }
     onFocusName = () => {
-        this.props.onFocusName()
+        this.props.onFocusName();
     }
     onFocusMail = () => {
-        this.props.onFocusMail()
+        this.props.onFocusMail();
     }
 
+    noticeHide = () => {
+        this.props.noticeHide();
+    }
+
+    noticeVisible = () => {
+        if (this.props.sendSuccess) {
+            return <PopupFormNotice text={"Спасибо, форма отправлена. Ожидайте звонок менеджера!"} success={true}/>
+        } else if (this.props.sendFailed) {
+            return <PopupFormNotice text={"Извините, форма не была отправлена. Попытайтесь снова!"} success={false}/>
+        }
+    }
 
     render() {
         return (
             <div className={style.popup + (this.props.popupIsOpen ? " " + style.active : "")}>
                 <div className={style.popup__inner}>
                     <a onClick={this.onOpenClosePopup} className={style.popup__close} href="#">X</a>
-                    <form className={style.form} onSubmit={this.onSendForm}>
+                    <form className={style.form} onSubmit={this.onSubmitForm}>
 
-
-                        <div className={style.form__notice + " " + style.form__notice_success}> <span>Спасибо, форма отправлена. Ожидайте звонок менеджера!</span> </div>
-                        <div className={style.form__notice + " " + style.form__notice_failed}> <span>Извините, форма не была отправлена. Попытайтесь снова!</span> </div>
-
+                        {this.noticeVisible()}
 
                         <fieldset className={style.form__fieldset}>
                             <legend className={style.form__legend}>Контактная информация</legend>
@@ -109,10 +116,9 @@ class Popup extends React.Component {
                                    className={style.form__textInput + (this.props.phoneFocus ? this.props.phoneIsValid ? " " + style.valid : " " + style.invalid : '')}
                                    value={this.props.phoneText}
                                    type="tel" placeholder="Ваш телефон..."/>
-
                         </fieldset>
 
-                        <button onClick={this.startSendingForm} className={style.button + " " + style.form__button}
+                        <button onClick={this.onUserSendForm} className={style.button + " " + style.form__button}
                                 type="submit">Отправить
                         </button>
 

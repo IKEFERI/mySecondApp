@@ -1,4 +1,4 @@
-import style from "../../App.module.sass";
+import style from "./WorkingHours.module.sass";
 import React from "react";
 
 

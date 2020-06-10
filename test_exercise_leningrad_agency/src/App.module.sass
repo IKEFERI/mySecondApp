@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap')
-@import "breakpoints"
+@import "assets/Sass/breakpoints"
 $grid-breakpoints: (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px)
 $base_color: #dddddd
 $text_color: #555555
@@ -13,98 +13,8 @@ $accent_color: #d24a43
   width: 100%
   margin: auto
   color: $text_color
-
-.header
-  width: 100%
-  &__logo__wrapper
-    margin: 20px 0
-
-.logo
-  display: block
-  width: auto
-  height: 100%
-
-  &__wrapper
-    height: 100px
-
-.nav
-  box-sizing: border-box
-  position: relative
-  display: block
-  background-color: $base_color
-  width: 100vw
-  margin-left: calc((100vw - 100%) / -2)
-  z-index: 99999
-
-  &__list
-    display: flex
-    flex-flow: row wrap
-    justify-content: space-between
-    list-style-type: none
-    max-width: 1200px
-    padding: 0
-    margin: auto
-
-  &__item
-    display: inline-block
-    flex: 1 1 10%
-    +media-breakpoint-down(sm)
-      flex-basis: 100%
-
-  &__link
-    display: block
-    padding: 20px
-    font-weight: 600
-    text-decoration: none
-    text-transform: uppercase
-    white-space: nowrap
-    text-align: center
-    color: $text_color
-    +mt(0.25s)
-
-    &:hover, &_active
-      background-color: $accent_color
-      color: #fff
-
-.main
-  position: relative
-  margin: 0
-  padding: 60px 10px
-
-  &__header
-    padding-bottom: 60px
-    max-width: 600px
-    margin: auto
-    text-align: center
-
-.h1
-  display: block
-  position: relative
-  text-align: center
-  text-transform: uppercase
-  font-size: 30px
-  font-weight: 600
-  line-height: 1
-  margin: 0 0 45px 0
-  padding: 0 0 15px 0
-  &:after
-    content: ''
-    position: absolute
-    bottom: 0
-    left: 50%
-    transform: translateX(-50%)
-    width: 70px
-    height: 3px
-    background-color: $accent_color
-
-.p
-  margin: 16px 0
-  font-size: 16px
-
-.strong
-  text-transform: uppercase
-  font-weight: 600
-  color: $accent_color
+  +media-breakpoint-down(sm)
+    margin-top: 60px
 
 .button
   display: inline-block
@@ -127,131 +37,13 @@ $accent_color: #d24a43
     box-shadow: 0 0 1px 0 #111
     transform: translateY(2px)
 
-
-.testimonials
-  display: block
-  margin-bottom: 60px
 .h2
   margin: 0 0 40px 0
   padding: 0
   text-align: center
 
-.carousel
-  display: block
-  position: relative
-
-.carousel__item
-  display: flex
-  flex-flow: row nowrap
-  position: relative
-  padding: 40px
-  margin: 0 10px
-  max-width: 500px
-  text-decoration: none
-  border: 3px solid $base_color
-  color: $text_color
-  background-color: #fff
-  +mt(0.25s)
-  +media-breakpoint-down(md)
-    flex-flow: row wrap
-    justify-items: center
-    justify-content: center
-    margin: auto
-  &:hover
-    border: 3px solid $accent_color
-    color: $accent_color
-    .round
-      box-shadow: 0 0 0 3px $accent_color
-    .testimonials__name
-      &:after
-        width: 70px
-
-.carousel 
-  .slide
-    background: #FFF
-        
-        
-.round
-  display: block
-  width: 80px
-  height: 80px
-  border-radius: 100%
-  overflow: hidden
-  +mt(0.25s)
-  &__img
-    width: 100%
-    object-fit: cover
-    object-position: center
-
-.testimonials__item_col_right
-  margin-left: 40px
-  +media-breakpoint-down(md)
-    margin-left: 0
-    margin-top: 20px
-    text-align: center
-.testimonials__name
-  font-weight: 600
-  font-size: 18px
-  padding-bottom: 10px
-  position: relative
-  margin-bottom: 26px
-  &:after
-    content: ''
-    position: absolute
-    bottom: 0
-    left: 0
-    width: 36px
-    height: 3px
-    background-color: $accent_color
-    +mt(0.25s)
-    +media-breakpoint-down(md)
-      left: 50%
-      transform: translateX(-50%)
 
 
-.blockquote
-  margin: 0
-  padding: 0
-  font: 16px/1.6 'Open Sans', sans-serif
-  font-style: italic
-
-
-.workingHours
-  display: block
-  margin: auto
-
-.table
-  position: relative
-  width: 100%
-  max-width: 240px
-  margin: auto
-  text-align: center
-  border: none
-  border-spacing: 0
-.tr
-  +mt(0.25s)
-  &:nth-child(2n+1)
-    background-color: $base_color
-  &:hover
-    background-color: lighten($accent_color,20%)
-
-.td
-  padding: 14px
-  font-weight: 600
-  font-size: 16px
-
-.footer__nav
-  padding: 20px
-  text-align: center
-.footer__nav__link
-  padding: 0
-  display: inline-block
-  position: relative
-  border-bottom: 1px solid $text_color
-  &:hover
-    background-color: initial
-    color: lighten($text_color,15%)
-    border-bottom: 1px solid lighten($text_color,15%)
 
 
 

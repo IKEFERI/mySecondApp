@@ -12,19 +12,22 @@ const startSendingForm = "START_SENDING_FORM";
 const focusPhone = "FOCUS_PHONE";
 const focusMail = "FOCUS_MAIL";
 const focusName = "FOCUS_NAME";
+const noticeHide = "NOTICE_HIDE";
 
 let initState = {
     popupIsOpen: false,
     nameText: '',
     mailText: '',
     phoneText: '',
-    nameFocus: false,
-    mailFocus: false,
-    phoneFocus: false,
+    nameFocused: false,
+    mailFocused: false,
+    phoneFocused: false,
     nameIsValid: false,
     mailIsValid: false,
     phoneIsValid: false,
     formSended: false,
+    sendSuccess: false,
+    sendFailed: false,
     startSendingForm: false,
     formIsValid: false,
     formData: {
@@ -106,7 +109,10 @@ const popupFormReduser = (state = initState, action) => {
         case "START_SENDING_FORM":
             return {
                 ...state,
-                startSendingForm: true
+                startSendingForm: true,
+                nameFocused: true,
+                mailFocused: true,
+                phoneFocused: true
             }
         case "SEND_FORM":
             if (state.mailIsValid && state.phoneIsValid && state.nameIsValid) {
@@ -144,28 +150,37 @@ const popupFormReduser = (state = initState, action) => {
                 nameText: '',
                 phoneText: '',
                 mailText: '',
+                sendSuccess: true,
                 formSended: true
             }
         case "SEND_FAILED":
             //запустим после успешной отправки
             return {
                 ...state,
-                formSended: false
+                formSended: false,
+                sendFailed: true,
             }
         case "FOCUS_NAME":
             return {
                 ...state,
-                nameFocus: true
+                nameFocused: true
             }
         case "FOCUS_MAIL":
             return {
                 ...state,
-                mailFocus: true
+                mailFocused: true
             }
         case "FOCUS_PHONE":
             return {
                 ...state,
-                phoneFocus: true
+                phoneFocused: true
+            }
+        case "NOTICE_HIDE":
+            return {
+                ...state,
+                sendSuccess: false,
+                sendFailed: false,
+
             }
         default:
             return state;
@@ -186,5 +201,6 @@ export const startSendingFormAC = () => ({type: startSendingForm});
 export const focusPhoneAC = () => ({type: focusPhone});
 export const focusNameAC = () => ({type: focusName});
 export const focusMailAC = () => ({type: focusMail});
+export const noticeHideAC = () => ({type: noticeHide})
 
 export default popupFormReduser;
