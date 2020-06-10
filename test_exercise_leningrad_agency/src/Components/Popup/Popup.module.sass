@@ -1,0 +1,103 @@
+@import 'src/App.module'
+.popup
+  display: none
+  visibility: hidden
+  opacity: 0
+  position: fixed
+  z-index: 999999
+  width: 100%
+  height: 100%
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  background-color: rgba(0,0,0,0.5)
+  &.active
+    overflow: hidden
+    display: block
+    visibility: visible
+    opacity: 1
+  &__close
+    display: block
+    text-align: right
+    font-size: 24px
+    font-weight: 600
+    color: $text_color
+    text-decoration: none
+
+.popup__inner
+  box-sizing: border-box
+  display: block
+  width: 90%
+  max-width: 500px
+  position: absolute
+  left: 50%
+  top: 50%
+  transform: translate(-50%,-50%)
+  background-color: #fff
+  padding: 15px
+  border-radius: 5px
+
+.form
+  box-sizing: border-box
+  &__fieldset
+    padding: 25px 15px
+    border-radius: 5px
+  &__legend
+    font-size: 18px
+    font-weight: 600
+
+  &__textInput
+    box-sizing: border-box
+    display: block
+    width: 100%
+    max-width: 400px
+    margin: 0 auto 14px
+    padding: 14px
+    border-radius: 5px
+    border: 2px solid $base_color
+  &__button
+    display: block
+    margin-left: auto
+
+.form__notice
+  display: flex
+  user-select: none
+  opacity: 0
+  visibility: hidden
+  align-items: center
+  justify-content: center
+  justify-items: center
+  color: $text_color
+  font-size: 24px
+  font-weight: 600
+  text-align: center
+  position: absolute
+  z-index: 9998
+  width: 100%
+  height: 100%
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+  background-color: #fff
+  +mt(0.25s)
+  span
+    z-index: 9999
+    padding: 20px
+  &~*
+    user-select: none
+    filter: blur(3px)
+.form__notice_success
+  visibility: visible
+  opacity: 1
+  background-color: rgba(#5dd243, 0.4)
+.form__notice_failed
+  visibility: visible
+  opacity: 1
+  background-color: rgba($accent_color, 0.4)
+.invalid
+  border-color: $accent_color
+
+.valid
+  border-color: #5dd243
