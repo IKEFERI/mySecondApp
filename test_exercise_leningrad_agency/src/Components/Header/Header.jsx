@@ -1,6 +1,7 @@
 import style from "./Header.module.sass";
 import logo from "../../logo.svg";
-import React, {useEffect} from "react";
+import React from "react";
+import MenuList from "./MenuList/MenuList";
 
 
 let Header = (props) => {
@@ -13,10 +14,6 @@ let Header = (props) => {
             props.openMenu();
         }
     }
-    useEffect(() => {
-
-    })
-
     return(
         <header className={style.header}>
             <div className={style.logo__wrapper + " " + style.logo__wrapper_pc}>
@@ -33,13 +30,8 @@ let Header = (props) => {
                     </a>
                 </div>
 
-                <ul className={style.nav__list + (props.isOpen ? " " + style.active : "")}>
-                    <li className={style.nav__item}><a className={style.nav__link + " " + style.nav__link_active}
-                                                       href="#">О компании</a></li>
-                    <li className={style.nav__item}><a className={style.nav__link} href="#">Услуги</a></li>
-                    <li className={style.nav__item}><a className={style.nav__link} href="#">О продукте</a></li>
-                    <li className={style.nav__item}><a className={style.nav__link} href="#">Контакты</a></li>
-                </ul>
+                <MenuList isOpen={props.isOpen}/>
+
             </nav>
         </header>
     )

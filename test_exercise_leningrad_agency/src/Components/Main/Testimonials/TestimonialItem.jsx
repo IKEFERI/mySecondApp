@@ -5,7 +5,7 @@ import React from "react";
 let TestimonialItem = (props) => {
     return (
         <div className={style.carousel__item__wrapper}>
-            <a href="#" className={style.carousel__item}>
+            <a href="#" onClick={(e)=>{e.preventDefault()}} className={style.carousel__item}>
                 <div className={style.testimonials__item_col_left}>
                     <div className={style.round}>
                         <img className={style.round__img} src={props.data.photo} alt=""/>

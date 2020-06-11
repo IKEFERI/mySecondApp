@@ -1,4 +1,4 @@
-import style from "Testimonials.module.sass";
+import style from "./Testimonials.module.sass";
 import React from "react";
 import leftImg from "../../../assets/img/left.jpg";
 import rightImg from "../../../assets/img/right.jpg";
