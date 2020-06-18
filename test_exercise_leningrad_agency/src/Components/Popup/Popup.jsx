@@ -59,6 +59,8 @@ class Popup extends React.Component {
                             // alert("Извините! Наш менеджер, вам не перезвонит. Попробуйте отправить еще раз! " + error);
                             setTimeout(this.noticeHide, 3000);
                         });
+                } else {
+                    alert("Заполните все поля корректно!")
                 }
             }
         }
@@ -122,17 +124,17 @@ class Popup extends React.Component {
                             <legend className={style.form__legend}>Контактная информация</legend>
 
                             <input onFocus={this.onFocusName} onChange={this.onNameInputText}
-                                   className={style.form__textInput + " " + (this.props.nameFocus && this.props.nameIsValid ? style.valid : style.invalid)}
+                                   className={style.form__textInput + " " + (this.props.nameFocus ? (this.props.nameIsValid ? style.valid : style.invalid) : "")}
                                    value={this.props.nameText}
                                    type="text" placeholder="Ваше полное имя..."/>
 
                             <input onFocus={this.onFocusMail} onChange={this.onMailInputText}
-                                   className={style.form__textInput + " " + (this.props.mailFocus && this.props.mailIsValid ? style.valid : style.invalid)}
+                                   className={style.form__textInput + " " + (this.props.mailFocus ? (this.props.mailIsValid ? style.valid : style.invalid) : "")}
                                    value={this.props.mailText}
                                    type="email" placeholder="Ваша электронная почта..."/>
 
                             <input onFocus={this.onFocusPhone} onChange={this.onPhoneInputText}
-                                   className={style.form__textInput + " " + (this.props.phoneFocus && this.props.phoneIsValid ? style.valid : style.invalid)}
+                                   className={style.form__textInput + " " + (this.props.phoneFocus ? (this.props.phoneIsValid ? style.valid : style.invalid) : "")}
                                    value={this.props.phoneText}
                                    type="tel" placeholder="Ваш телефон..."/>
                         </fieldset>
