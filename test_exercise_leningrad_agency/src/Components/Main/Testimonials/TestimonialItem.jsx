@@ -4,7 +4,7 @@ import React from "react";
 
 let TestimonialItem = (props) => {
     return (
-        <div className={style.carousel__item__wrapper}>
+
             <a href="#" onClick={(e)=>{e.preventDefault()}} className={style.carousel__item}>
                 <div className={style.testimonials__item_col_left}>
                     <div className={style.round}>
@@ -21,7 +21,7 @@ let TestimonialItem = (props) => {
                     </blockquote>
                 </div>
             </a>
-        </div>
+
     )
 }
 
