@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 
 let MenuList = (props) => {
     return (
-        <ul className={style.nav__list + (props.isOpen ? " " + style.active : "")}>
+        <ul className={style.nav__list + " " + (props.isOpen && style.active)}>
 
             <li className={style.nav__item}>
                 <NavLink className={style.nav__link} activeClassName={style.nav__link_active} to="/" exact>О компании</NavLink>

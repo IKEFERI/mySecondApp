@@ -6,8 +6,21 @@ import PopupFormNotice from "./PopupFormNotice";
 // huh how do you like this. Elon Musk?
 class Popup extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.pContainer = React.createRef();
+        this.pForm = React.createRef();
+    }
+
     componentDidMount = () => {
-        console.log("component did mounted, form reset, and ready to use. And its all correctly... in my dreams");
+        console.log("component popup did mounted, form reset, and ready to use. And its all correctly... in my dreams");
+    }
+    componentDidUpdate = () => {
+        if (this.props.popupIsOpen) {
+            this.pContainer.current.addEventListener('click', this.onClickOutsideHandler);
+        } else {
+            this.pContainer.current.removeEventListener('click', this.onClickOutsideHandler);
+        }
     }
 
     onUserSendForm = () => {
@@ -90,10 +103,16 @@ class Popup extends React.Component {
         }
     }
 
+    onClickOutsideHandler = (e) => {
+        if (this.props.popupIsOpen && !this.pForm.current.contains(e.target)) {
+            this.props.onOpenClosePopup();
+        }
+    }
+
     render() {
         return (
-            <div className={style.popup + (this.props.popupIsOpen ? " " + style.active : "")}>
-                <div className={style.popup__inner}>
+            <div ref={this.pContainer} className={style.popup + " " + (this.props.popupIsOpen && style.active)}>
+                <div ref={this.pForm} className={style.popup__inner}>
                     <a onClick={this.onOpenClosePopup} className={style.popup__close} href="#">X</a>
                     <form className={style.form} onSubmit={this.onSubmitForm}>
 
@@ -103,17 +122,17 @@ class Popup extends React.Component {
                             <legend className={style.form__legend}>Контактная информация</legend>
 
                             <input onFocus={this.onFocusName} onChange={this.onNameInputText}
-                                   className={style.form__textInput + (this.props.nameFocus ? this.props.nameIsValid ? " " + style.valid : " " + style.invalid : '')}
+                                   className={style.form__textInput + " " + (this.props.nameFocus && this.props.nameIsValid ? style.valid : style.invalid)}
                                    value={this.props.nameText}
                                    type="text" placeholder="Ваше полное имя..."/>
 
                             <input onFocus={this.onFocusMail} onChange={this.onMailInputText}
-                                   className={style.form__textInput + (this.props.mailFocus ? this.props.mailIsValid ? " " + style.valid : " " + style.invalid : '')}
+                                   className={style.form__textInput + " " + (this.props.mailFocus && this.props.mailIsValid ? style.valid : style.invalid)}
                                    value={this.props.mailText}
                                    type="email" placeholder="Ваша электронная почта..."/>
 
                             <input onFocus={this.onFocusPhone} onChange={this.onPhoneInputText}
-                                   className={style.form__textInput + (this.props.phoneFocus ? this.props.phoneIsValid ? " " + style.valid : " " + style.invalid : '')}
+                                   className={style.form__textInput + " " + (this.props.phoneFocus && this.props.phoneIsValid ? style.valid : style.invalid)}
                                    value={this.props.phoneText}
                                    type="tel" placeholder="Ваш телефон..."/>
                         </fieldset>
