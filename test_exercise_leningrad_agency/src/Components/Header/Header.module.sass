@@ -36,21 +36,25 @@
   justify-content: space-between
   list-style-type: none
   max-width: 1200px
+  width: 100%
   padding: 0
   margin: auto
   +mt(0.25s)
   &.active
     +media-breakpoint-down(sm)
+      transform: translateX(0)
+      left: 0
       background-color: $base_color
       opacity: 1
       visibility: visible
-      user-select: initial
-
+      +mt(0.25s)
   +media-breakpoint-down(sm)
     background-color: transparent
-    user-select: none
     opacity: 0
     visibility: hidden
+    position: absolute
+    left: -700px
+    transform: translateX(-700px)
 
 
 .nav__item
