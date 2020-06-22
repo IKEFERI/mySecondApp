@@ -1,6 +1,6 @@
 import style from "./MainHeader.module.sass";
 import React from "react";
-import PopupOpenButtonContainer from "../Popup/PopupOpenButtonContainer";
+import PopupOpenButtonContainer from "../common/PopupOpenButton/PopupOpenButtonContainer";
 
 
 let MainHeader = () => {

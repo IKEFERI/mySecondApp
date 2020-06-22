@@ -1,18 +1,10 @@
 import React from "react";
 
-const openClosePopup = "OPEN_CLOSE_POPUP";
-const nameInputText = "NAME_INPUT_TEXT";
-const mailInputText = "MAIL_INPUT_TEXT";
-const phoneInputText = "PHONE_INPUT_TEXT";
-const sendForm = "SEND_FORM";
-const clearState = "CLEAR_STATE";
-const sendSuccess = "SEND_SUCCESS";
-const sendFailed = "SEND_FAILED";
-const startSendingForm = "START_SENDING_FORM";
-const focusPhone = "FOCUS_PHONE";
-const focusMail = "FOCUS_MAIL";
-const focusName = "FOCUS_NAME";
-const noticeHide = "NOTICE_HIDE";
+const OPEN_CLOSE_POPUP = "OPEN_CLOSE_POPUP";
+const INPUT_TEXT = "INPUT_TEXT"
+const SEND_FORM = "SEND_FORM";
+const IS_SENDED = "IS_SENDED";
+const FOCUS_FIELD = "FOCUS_FIELD";
 
 let initState = {
     popupIsOpen: false,
@@ -25,10 +17,8 @@ let initState = {
     nameIsValid: false,
     mailIsValid: false,
     phoneIsValid: false,
-    formSended: false,
-    sendSuccess: false,
-    sendFailed: false,
-    startSendingForm: false,
+    formIsSended: false,
+    isFetch: false,
     formIsValid: false,
     formData: {
         name: '',
@@ -40,81 +30,44 @@ let initState = {
 }
 
 const popupFormReduser = (state = initState, action) => {
-    let reg;
+
+    const isFullname = action.name === "fullname";
+    const isPhone = action.name === "phone";
+    const isMail = action.name === "mail";
+
     switch (action.type) {
-        case "OPEN_CLOSE_POPUP":
-            if (state.popupIsOpen) {
-                return {
-                    ...state,
-                    popupIsOpen: false
-                }
-            } else {
-
-                return {
-                    ...state,
-                    popupIsOpen: true
-                }
-            }
-        case "NAME_INPUT_TEXT":
-            reg = /[^A-z-А-я]/g;
-            if (!reg.test(action.value) && action.value) {
-                return {
-                    ...state,
-                    nameIsValid: true,
-                    nameText: action.value
-
-                }
-            } else {
-                console.log('invalid');
-                return {
-                    ...state,
-                    nameIsValid: false,
-                    nameText: action.value
-                }
-            }
-
-        case "PHONE_INPUT_TEXT":
-            reg = /[^+0-9?]/g;
-            if (!reg.test(action.value) && action.value) {
-                return {
-                    ...state,
-                    phoneIsValid: true,
-                    phoneText: action.value
-                }
-            } else {
-                console.log('invalid');
-                return {
-                    ...state,
-                    phoneIsValid: false,
-                    phoneText: action.value
-                }
-            }
-
-        case "MAIL_INPUT_TEXT":
-            reg = /.+@.+\..+/i;
-            if (action.value.match(reg) && action.value) {
-                return {
-                    ...state,
-                    mailIsValid: true,
-                    mailText: action.value
-                }
-            } else {
-                return {
-                    ...state,
-                    mailIsValid: false,
-                    mailText: action.value
-                }
-            }
-
-        case "START_SENDING_FORM":
+        case OPEN_CLOSE_POPUP:
             return {
                 ...state,
-                startSendingForm: true,
-                nameFocused: true,
-                mailFocused: true,
-                phoneFocused: true
+                popupIsOpen: !state.popupIsOpen
             }
-        case "SEND_FORM":
+        case INPUT_TEXT:
+            let regN = /[^A-z-А-я]/g;
+            let regP = /[^+0-9?]/g;
+            let regM = /.+@.+\..+/i;
+            let value = action.value;
+            //action.name
+            return {
+                ...state,
+
+                nameIsValid: (isFullname && value) ? !regN.test(value) : (isFullname ? false : state.nameIsValid),
+                nameText: isFullname ? value : state.nameText,
+
+                phoneIsValid: (isPhone && value) ? !regP.test(value) : (isPhone ? false : state.phoneIsValid),
+                phoneText: isPhone ? value : state.phoneText,
+
+                mailIsValid: (isMail && value) ? value.match(regM) : (isMail ? false : state.mailIsValid),
+                mailText: isMail ? value : state.mailText,
+            }
+        case FOCUS_FIELD:
+            return {
+                ...state,
+                nameFocused: isFullname ? true : state.nameFocused,
+                mailFocused: isMail ? true : state.mailFocused,
+                phoneFocused: isPhone ? true : state.phoneFocused
+            }
+
+        case SEND_FORM:
             if (state.mailIsValid && state.phoneIsValid && state.nameIsValid) {
                 return {
                     ...state,
@@ -125,82 +78,43 @@ const popupFormReduser = (state = initState, action) => {
                         lander: state.lander,
                         form: state.form
                     },
+                    isFetch: true,
                     formIsValid: true
                 }
             } else {
-                return {...state, formIsValid: false}
+                return {
+                    ...state,
+                    formIsValid: false,
+                    nameFocused: true,
+                    mailFocused: true,
+                    phoneFocused: true
+                }
             }
-        case "CLEAR_STATE":
-            return {
-                ...state,
-                formData: {
-                    name: '',
-                    mail: '',
-                    phone: '',
-                    lander: '',
-                    form: ''
-                },
-                startSendingForm: true,
-                formIsValid: false
-            }
-        case "SEND_SUCCESS":
-            //запустим после успешной отправки
-            return {
-                ...state,
-                nameText: '',
-                phoneText: '',
-                mailText: '',
-                sendSuccess: true,
-                formSended: true
-            }
-        case "SEND_FAILED":
-            //запустим после успешной отправки
-            return {
-                ...state,
-                formSended: false,
-                sendFailed: true,
-            }
-        case "FOCUS_NAME":
-            return {
-                ...state,
-                nameFocused: true
-            }
-        case "FOCUS_MAIL":
-            return {
-                ...state,
-                mailFocused: true
-            }
-        case "FOCUS_PHONE":
-            return {
-                ...state,
-                phoneFocused: true
-            }
-        case "NOTICE_HIDE":
-            return {
-                ...state,
-                sendSuccess: false,
-                sendFailed: false,
+        case IS_SENDED:
+            return action.value ?
+                 {
+                    ...state,
+                    nameText: '',
+                    phoneText: '',
+                    mailText: '',
+                    formData: {name: '', mail: '', phone: '', lander: '', form: ''},
+                    formIsSended: true,
+                    isFetch: false,
+                    formIsValid: false
+                } : {...state,
+                    isFetch: false}
 
-            }
         default:
             return state;
-
     }
 
 }
 
-export const openClosePopupAC = () => ({type: openClosePopup});
-export const nameInputTextAC = (val) => ({type: nameInputText, value: val});
-export const mailInputTextAC = (val) => ({type: mailInputText, value: val});
-export const phoneInputTextAC = (val) => ({type: phoneInputText, value: val});
-export const sendFormAC = () => ({type: sendForm});
-export const clearStateAC = () => ({type: clearState});
-export const sendSuccessAC = () => ({type: sendSuccess});
-export const sendFailedAC = () => ({type: sendFailed});
-export const startSendingFormAC = () => ({type: startSendingForm});
-export const focusPhoneAC = () => ({type: focusPhone});
-export const focusNameAC = () => ({type: focusName});
-export const focusMailAC = () => ({type: focusMail});
-export const noticeHideAC = () => ({type: noticeHide})
+export const openClosePopup = () => ({type: OPEN_CLOSE_POPUP});
+export const inputText = (val, name) => ({type: INPUT_TEXT, value: val, name});
+export const sendForm = () => ({type: SEND_FORM});
+export const isSended = (val) => ({type: IS_SENDED, value: val});
+export const focusField = (name) => ({type: FOCUS_FIELD, name});
+
 
 export default popupFormReduser;
