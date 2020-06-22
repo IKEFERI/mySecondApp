@@ -7,6 +7,7 @@ import {
     isSended,
     sendForm,
     focusField,
+    notifyVisible,
     sendDataThunkCreator
 } from "../../redux/popupFormReducer";
 
@@ -71,6 +72,7 @@ class PopupContainer extends React.Component {
         phoneIsValid={this.props.phoneIsValid}
         phoneText={this.props.phoneText}
         onUserSendForm={this.onUserSendForm}
+        notifyIsVisible={this.props.notifyIsVisible}
         />)
     }
 }
@@ -99,8 +101,9 @@ let mapStateToProps = (state) => {
         nameFocus: popupState.nameFocused,
         mailFocus: popupState.mailFocused,
         phoneFocus: popupState.phoneFocused,
+        notifyIsVisible: popupState.notifyIsVisible
 
     }
 }
 
-export default connect(mapStateToProps, { openClosePopup, inputText, isSended, sendForm, focusField, sendData: sendDataThunkCreator })(PopupContainer);
+export default connect(mapStateToProps, { openClosePopup, inputText, isSended, sendForm, focusField, notifyVisible, sendData: sendDataThunkCreator })(PopupContainer);

@@ -11,7 +11,7 @@ let Popup = (props) => {
                 <a onClick={props.onOpenClosePopup} className={style.popup__close} href="#">X</a>
                 <form className={style.form} onSubmit={props.onSubmitForm}>
 
-                    {props.isFetch ?
+                    {props.notifyIsVisible ?
                         props.formIsSended ?
                             <PopupFormNotice
                                 text={"Спасибо, форма отправлена. Ожидайте звонок менеджера!"}

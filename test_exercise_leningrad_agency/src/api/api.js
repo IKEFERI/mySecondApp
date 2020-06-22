@@ -1,10 +1,17 @@
 import * as axios from "axios";
-
+import qs from 'qs';
 
 
 export const serverAPI = {
+
     sendData(data) {
-        return axios.post('mail.php', data);
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            data: qs.stringify(data),
+            url: 'mail.php'
+        };
+        return axios(options);
     }
 }
 

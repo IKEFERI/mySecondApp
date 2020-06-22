@@ -6,6 +6,7 @@ const INPUT_TEXT = "INPUT_TEXT"
 const SEND_FORM = "SEND_FORM";
 const IS_SENDED = "IS_SENDED";
 const FOCUS_FIELD = "FOCUS_FIELD";
+const NOTIFY_VISIBLE = "NOTIFY_VISIBLE";
 
 let initState = {
     popupIsOpen: false,
@@ -21,6 +22,7 @@ let initState = {
     formIsSended: false,
     isFetch: false,
     formIsValid: false,
+    notifyIsVisible: false,
     formData: {
         name: '',
         mail: '',
@@ -101,12 +103,19 @@ const popupFormReduser = (state = initState, action) => {
                     formData: {name: '', mail: '', phone: '', lander: '', form: ''},
                     formIsSended: true,
                     isFetch: false,
-                    formIsValid: false
+                    formIsValid: false,
+                    nameIsValid: false,
+                    mailIsValid: false,
+                    phoneIsValid: false
                 } : {
                     ...state,
                     isFetch: false
                 }
-
+        case NOTIFY_VISIBLE:
+            return {
+                ...state,
+                notifyIsVisible: action.value
+            }
         default:
             return state;
     }
@@ -118,6 +127,7 @@ export const inputText = (val, name) => ({type: INPUT_TEXT, value: val, name});
 export const sendForm = () => ({type: SEND_FORM});
 export const isSended = (val) => ({type: IS_SENDED, value: val});
 export const focusField = (name) => ({type: FOCUS_FIELD, name});
+export const notifyVisible = (val) => ({type: NOTIFY_VISIBLE, value: val})
 
 export const sendDataThunkCreator = (isFetch,formIsSended,formIsValid,formData) => {
     return (dispatch) => {
@@ -126,14 +136,22 @@ export const sendDataThunkCreator = (isFetch,formIsSended,formIsValid,formData) 
                 alert("Вы уже отправили заявку, спасибо!")
             } else {
                 if (formIsValid) {
-                    console.log("Form is valid and the request will be sent.");
+                    console.log("Form is valid and the request will be sent. " + formData);
+
                     serverAPI.sendData(formData).then(response => {
                         console.log("Request has been sended and response success received from server. " + response);
-                        setTimeout(() => dispatch(isSended(true)), 3000);
+                        dispatch(isSended(true))
+
+                        dispatch(notifyVisible(true))
+                        setTimeout(() => dispatch(notifyVisible(false)), 3000);
                     })
                         .catch(error => {
                             console.log("Request has been sended, but response failed. " + error);
-                            setTimeout(() => dispatch(isSended(false)), 3000);
+                            dispatch(isSended(false))
+
+                            dispatch(notifyVisible(true))
+
+                            setTimeout(() => dispatch(notifyVisible(false)), 3000);
                         });
                 } else {
                     alert("Заполните все поля корректно!")
