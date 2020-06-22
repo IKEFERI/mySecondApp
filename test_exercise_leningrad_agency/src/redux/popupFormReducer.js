@@ -1,4 +1,5 @@
 import React from "react";
+import {serverAPI} from "../api/api";
 
 const OPEN_CLOSE_POPUP = "OPEN_CLOSE_POPUP";
 const INPUT_TEXT = "INPUT_TEXT"
@@ -92,7 +93,7 @@ const popupFormReduser = (state = initState, action) => {
             }
         case IS_SENDED:
             return action.value ?
-                 {
+                {
                     ...state,
                     nameText: '',
                     phoneText: '',
@@ -101,8 +102,10 @@ const popupFormReduser = (state = initState, action) => {
                     formIsSended: true,
                     isFetch: false,
                     formIsValid: false
-                } : {...state,
-                    isFetch: false}
+                } : {
+                    ...state,
+                    isFetch: false
+                }
 
         default:
             return state;
@@ -115,6 +118,30 @@ export const inputText = (val, name) => ({type: INPUT_TEXT, value: val, name});
 export const sendForm = () => ({type: SEND_FORM});
 export const isSended = (val) => ({type: IS_SENDED, value: val});
 export const focusField = (name) => ({type: FOCUS_FIELD, name});
+
+export const sendDataThunkCreator = (isFetch,formIsSended,formIsValid,formData) => {
+    return (dispatch) => {
+        if (isFetch) {
+            if (formIsSended) {
+                alert("Вы уже отправили заявку, спасибо!")
+            } else {
+                if (formIsValid) {
+                    console.log("Form is valid and the request will be sent.");
+                    serverAPI.sendData(formData).then(response => {
+                        console.log("Request has been sended and response success received from server. " + response);
+                        setTimeout(() => dispatch(isSended(true)), 3000);
+                    })
+                        .catch(error => {
+                            console.log("Request has been sended, but response failed. " + error);
+                            setTimeout(() => dispatch(isSended(false)), 3000);
+                        });
+                } else {
+                    alert("Заполните все поля корректно!")
+                }
+            }
+        }
+    }
+}
 
 
 export default popupFormReduser;

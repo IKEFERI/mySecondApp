@@ -1,8 +1,14 @@
 import React from "react";
 import {connect} from "react-redux";
 import Popup from "./Popup";
-import { openClosePopup, inputText, isSended, sendForm, focusField } from "../../redux/popupFormReducer";
-import {serverAPI} from "../../api/api";
+import {
+    openClosePopup,
+    inputText,
+    isSended,
+    sendForm,
+    focusField,
+    sendDataThunkCreator
+} from "../../redux/popupFormReducer";
 
 // huh how do you like this. Elon Musk?
 class PopupContainer extends React.Component {
@@ -26,25 +32,8 @@ class PopupContainer extends React.Component {
     }
     onSubmitForm = (e) => {
         e.preventDefault();
-        if (this.props.isFetch) {
-            if (this.props.formIsSended) {
-                alert("Вы уже отправили заявку, спасибо!")
-            } else {
-                if (this.props.formIsValid) { console.log("Form is valid and the request will be sent.");
-                    serverAPI.sendData(this.props.formData).then(response => {
-                        console.log("Request has been sended and response success received from server. " + response);
-                        setTimeout(()=>this.props.isSended(true), 3000);
-                    })
-                        .catch(error => { console.log("Request has been sended, but response failed. " + error);
-                            setTimeout(()=>this.props.isSended(false), 3000);
-                        });
-                } else {
-                    alert("Заполните все поля корректно!")
-                }
-            }
-        }
+        this.props.sendData(this.props.isFetch,this.props.formIsSended,this.props.formIsValid,this.props.formData);
     }
-
     onInput = (e) => {
         this.props.inputText(e.target.value, e.target.name);
     }
@@ -114,4 +103,4 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { openClosePopup, inputText, isSended, sendForm, focusField })(PopupContainer);
+export default connect(mapStateToProps, { openClosePopup, inputText, isSended, sendForm, focusField, sendData: sendDataThunkCreator })(PopupContainer);
